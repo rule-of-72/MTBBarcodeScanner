@@ -180,14 +180,14 @@ CGFloat const kFocalPointOfInterestY = 0.5;
 #pragma mark - AVCaptureMetadataOutputObjects Delegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
-    NSMutableArray *codes = [[NSMutableArray alloc] init];
-    for (AVMetadataObject *metaData in metadataObjects) {
-        AVMetadataMachineReadableCodeObject *barCodeObject = (AVMetadataMachineReadableCodeObject *)[self.capturePreviewLayer transformedMetadataObjectForMetadataObject:(AVMetadataMachineReadableCodeObject *)metaData];
-        if (barCodeObject) {
-            [codes addObject:barCodeObject];
-        }
-    }
     if (self.resultBlock) {
+        NSMutableArray *codes = [[NSMutableArray alloc] init];
+        for (AVMetadataObject *metaData in metadataObjects) {
+            AVMetadataMachineReadableCodeObject *barCodeObject = (AVMetadataMachineReadableCodeObject *)[self.capturePreviewLayer transformedMetadataObjectForMetadataObject:(AVMetadataMachineReadableCodeObject *)metaData];
+            if (barCodeObject) {
+                [codes addObject:barCodeObject];
+            }
+        }
         self.resultBlock(codes);
     }
 }
