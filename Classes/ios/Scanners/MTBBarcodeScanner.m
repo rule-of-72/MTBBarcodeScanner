@@ -279,9 +279,25 @@ CGFloat const kFocalPointOfInterestY = 0.5;
     
     if (input) {
         // Set an optimized preset for barcode scanning
-        [newSession setSessionPreset:AVCaptureSessionPreset640x480];
+//        [newSession setSessionPreset:AVCaptureSessionPreset640x480];
+        if([newSession canSetSessionPreset:AVCaptureSessionPreset1920x1080] == YES)
+        {
+            NSLog(@"%s - AVCaptureSessionPreset1920x1080", __FUNCTION__);
+            newSession.sessionPreset = AVCaptureSessionPreset1920x1080;
+        }
+        else if([newSession canSetSessionPreset:AVCaptureSessionPreset1280x720] == YES)
+        {
+            NSLog(@"%s - AVCaptureSessionPreset1280x720", __FUNCTION__);
+            newSession.sessionPreset = AVCaptureSessionPreset1280x720;
+        }
+        else
+        {
+            NSLog(@"%s - AVCaptureSessionPreset640x480", __FUNCTION__);
+            newSession.sessionPreset = AVCaptureSessionPreset640x480;
+        }
+
         [newSession addInput:input];
-        
+
         AVCaptureMetadataOutput *captureOutput = [[AVCaptureMetadataOutput alloc] init];
         [captureOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
         [newSession addOutput:captureOutput];
@@ -304,21 +320,31 @@ CGFloat const kFocalPointOfInterestY = 0.5;
     
     AVCaptureDevice *newCaptureDevice = nil;
     NSError *lockError = nil;
+
     newCaptureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+
     if ([newCaptureDevice lockForConfiguration:&lockError] == YES) {
-        
+
         // Prioritize the focus on objects near to the device
         if ([newCaptureDevice respondsToSelector:@selector(isAutoFocusRangeRestrictionSupported)] &&
             newCaptureDevice.isAutoFocusRangeRestrictionSupported) {
             newCaptureDevice.autoFocusRangeRestriction = AVCaptureAutoFocusRangeRestrictionNear;
         }
-        
+/*
         // Focus on the center of the image
         if ([newCaptureDevice respondsToSelector:@selector(isFocusPointOfInterestSupported)] &&
             newCaptureDevice.isFocusPointOfInterestSupported) {
             newCaptureDevice.focusPointOfInterest = CGPointMake(kFocalPointOfInterestX, kFocalPointOfInterestY);
         }
-        
+*/
+        // [iOS 8] Fixed to manual focus.  Forces the user to bring the barcode close to the camera and in-focus.
+        if([newCaptureDevice isFocusModeSupported:AVCaptureFocusModeLocked]){
+            [newCaptureDevice setFocusMode:AVCaptureFocusModeLocked];
+            [newCaptureDevice setFocusModeLockedWithLensPosition:0.1f completionHandler:^(CMTime syncTime) {
+                NSLog(@"adjusting focus done!");
+            }];
+        }
+
         [newCaptureDevice unlockForConfiguration];
     }
     
