@@ -115,7 +115,6 @@ CGFloat const kFocalPointOfInterestY = 0.5;
     if (self) {
         NSAssert(!([metaDataObjectTypes indexOfObject:AVMetadataObjectTypeFace] != NSNotFound),
                  @"The type %@ is not supported by MTBBarcodeScanner.", AVMetadataObjectTypeFace);
-        
         _metaDataObjectTypes = metaDataObjectTypes;
         _previewView = previewView;
         [self addRotationObserver];
