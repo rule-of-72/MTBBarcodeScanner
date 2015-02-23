@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "MTBBarcodeScanner.h"
+#import "MTBBarcodeScanner+Subclassing.h"
 
 @interface MTBBarcodeScanner () <AVCaptureMetadataOutputObjectsDelegate>
 /*!
@@ -31,6 +32,13 @@
  previewView when scanning starts.
  */
 @property (strong, nonatomic) AVCaptureVideoPreviewLayer *capturePreviewLayer;
+
+/*!
+ @property captureOutput
+ @abstract
+ The output object used by the capture session.
+ */
+@property (strong, nonatomic) AVCaptureMetadataOutput *captureOutput;
 
 /*!
  @property metaDataObjectTypes
@@ -279,10 +287,11 @@ CGFloat const kFocalPointOfInterestY = 0.5;
     
     if (input) {
         // Set an optimized preset for barcode scanning
-        [newSession setSessionPreset:AVCaptureSessionPreset640x480];
+        [newSession setSessionPreset:[self sessionPreset]];
         [newSession addInput:input];
         
         AVCaptureMetadataOutput *captureOutput = [[AVCaptureMetadataOutput alloc] init];
+        self.captureOutput = captureOutput;
         [captureOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
         [newSession addOutput:captureOutput];
         captureOutput.metadataObjectTypes = self.metaDataObjectTypes;
@@ -359,5 +368,10 @@ CGFloat const kFocalPointOfInterestY = 0.5;
                                                object:nil];
 }
 
+#pragma mark - Subclassing Hooks and Defaults
+
+- (NSString *)sessionPreset {
+    return AVCaptureSessionPreset640x480;
+}
 
 @end
