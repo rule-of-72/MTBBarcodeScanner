@@ -175,7 +175,7 @@ CGFloat const kFocalPointOfInterestY = 0.5;
     }
 }
 
-- (void)startScanningWithResultBlock:(void (^)(NSArray *codes))resultBlock {
+- (void)startScanningWithTorch:(BOOL)torch WithResultBlock:(void (^)(NSArray *codes))resultBlock {
     NSAssert([MTBBarcodeScanner cameraIsPresent], @"Attempted to start scanning on a device with no camera. Check requestCameraPermissionWithSuccess: method before calling startScanningWithResultBlock:");
     NSAssert(![MTBBarcodeScanner scanningIsProhibited], @"Scanning is prohibited on this device. \
              Check requestCameraPermissionWithSuccess: method before calling startScanningWithResultBlock:");
@@ -186,6 +186,15 @@ CGFloat const kFocalPointOfInterestY = 0.5;
         self.captureDevice = [self newCaptureDevice];
         self.session = [self newSession];
         self.hasExistingSession = YES;
+    }
+    
+    if (torch){
+        // Set torch to on
+        [self.session beginConfiguration];
+        [self.captureDevice lockForConfiguration:nil];
+        [self.captureDevice setTorchMode:AVCaptureTorchModeOn];
+        [self.captureDevice unlockForConfiguration];
+        [self.session commitConfiguration];
     }
     
     [self.session startRunning];

@@ -290,9 +290,10 @@
 				LastUpgradeCheck = 0600;
 				TargetAttributes = {
 					27C3BF3D18A7140F00C44713 = {
-						DevelopmentTeam = K83F2KZFM9;
+						DevelopmentTeam = Y42RG498W2;
 					};
 					27C3BF6118A7140F00C44713 = {
+						DevelopmentTeam = Y42RG498W2;
 						TestTargetID = 27C3BF3D18A7140F00C44713;
 					};
 				};

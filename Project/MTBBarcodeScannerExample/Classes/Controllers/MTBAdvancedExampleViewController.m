@@ -59,7 +59,7 @@
 #pragma mark - Scanning
 
 - (void)startScanning {
-    [self.scanner startScanningWithResultBlock:^(NSArray *codes) {
+    [self.scanner startScanningWithTorch:NO WithResultBlock:^(NSArray *codes) {
         [self drawOverlaysOnCodes:codes];
     }];
     

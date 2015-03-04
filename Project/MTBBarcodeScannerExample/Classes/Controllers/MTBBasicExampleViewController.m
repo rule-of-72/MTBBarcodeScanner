@@ -47,7 +47,7 @@
 - (void)startScanning {
     self.uniqueCodes = [[NSMutableArray alloc] init];
     
-    [self.scanner startScanningWithResultBlock:^(NSArray *codes) {
+    [self.scanner startScanningWithTorch:NO WithResultBlock:^(NSArray *codes) {
         for (AVMetadataMachineReadableCodeObject *code in codes) {
             if (code.stringValue && [self.uniqueCodes indexOfObject:code.stringValue] == NSNotFound) {
                 [self.uniqueCodes addObject:code.stringValue];
