@@ -187,7 +187,19 @@ CGFloat const kFocalPointOfInterestY = 0.5;
         self.session = [self newSession];
         self.hasExistingSession = YES;
     }
-    
+    // Adding autoTorch mode. Also have to add video output to the session for auto mode to work.
+    if([self.captureDevice hasTorch] && [self.captureDevice isTorchAvailable] && [self.captureDevice isTorchModeSupported:AVCaptureTorchModeAuto]){
+      [self.session beginConfiguration];
+      [self.captureDevice lockForConfiguration:nil];
+      AVCaptureOutput *videoOutput = [[AVCaptureVideoDataOutput alloc] init];
+      if([self.session canAddOutput:videoOutput]) {
+        [self.session addOutput:videoOutput];
+      }
+      [self.captureDevice setTorchMode:AVCaptureTorchModeAuto];
+      [self.captureDevice unlockForConfiguration];
+      [self.session commitConfiguration];
+    }
+  
     [self.session startRunning];
     self.capturePreviewLayer.cornerRadius = self.previewView.layer.cornerRadius;
     [self.previewView.layer addSublayer:self.capturePreviewLayer];
