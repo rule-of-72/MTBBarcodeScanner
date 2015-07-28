@@ -283,10 +283,25 @@ CGFloat const kFocalPointOfInterestY = 0.5;
 }
 
 - (void)refreshVideoOrientation {
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    self.capturePreviewLayer.frame = self.previewView.bounds;
-    if ([self.capturePreviewLayer.connection isVideoOrientationSupported]) {
-        self.capturePreviewLayer.connection.videoOrientation = [self captureOrientationForInterfaceOrientation:orientation];
+    if (self.shouldUseUIDeviceOrientation) {
+        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        
+        if (orientation == UIDeviceOrientationPortraitUpsideDown && self.shouldIgnoreFaceDownDeviceOrientation) {
+            return;
+        } else {
+            self.capturePreviewLayer.frame = self.previewView.bounds;
+            if ([self.capturePreviewLayer.connection isVideoOrientationSupported]) {
+                self.capturePreviewLayer.connection.videoOrientation = [self captureOrientationForDeviceOrientation:orientation];
+            }
+        }
+        
+    } else {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        
+        self.capturePreviewLayer.frame = self.previewView.bounds;
+        if ([self.capturePreviewLayer.connection isVideoOrientationSupported]) {
+            self.capturePreviewLayer.connection.videoOrientation = [self captureOrientationForInterfaceOrientation:orientation];
+        }
     }
 }
 
@@ -299,6 +314,21 @@ CGFloat const kFocalPointOfInterestY = 0.5;
         case UIInterfaceOrientationLandscapeLeft:
             return AVCaptureVideoOrientationLandscapeLeft;
         case UIInterfaceOrientationLandscapeRight:
+            return AVCaptureVideoOrientationLandscapeRight;
+        default:
+            return AVCaptureVideoOrientationPortrait;
+    }
+}
+
+- (AVCaptureVideoOrientation)captureOrientationForDeviceOrientation:(UIDeviceOrientation)interfaceOrientation {
+    switch (interfaceOrientation) {
+        case UIDeviceOrientationFaceUp:
+            return AVCaptureVideoOrientationPortrait;
+        case UIDeviceOrientationFaceDown:
+            return AVCaptureVideoOrientationPortraitUpsideDown;
+        case UIDeviceOrientationLandscapeRight:
+            return AVCaptureVideoOrientationLandscapeLeft;
+        case UIDeviceOrientationLandscapeLeft:
             return AVCaptureVideoOrientationLandscapeRight;
         default:
             return AVCaptureVideoOrientationPortrait;

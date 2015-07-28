@@ -23,6 +23,17 @@ typedef NS_ENUM(NSUInteger, MTBCamera) {
 @property (nonatomic, assign) MTBCamera camera;
 
 /**
+ *  Use UIDeviceOrientation instead of UIInterfaceOrientation for changing the camera view to the correct orientation
+ *  Set to YES, if a strange layout bug occurs.
+ */
+@property (nonatomic, assign) BOOL shouldUseUIDeviceOrientation;
+
+/**
+ *  Use this BOOL only if shouldUseUIDeviceOrientation is set to YES
+ */
+@property (nonatomic, assign) BOOL shouldIgnoreFaceDownDeviceOrientation;
+
+/**
  *  Initialize a scanner that will feed the camera input
  *  into the given UIView.
  *
