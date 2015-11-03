@@ -7,17 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		21B84FCC1BE9145C0096A584 /* MTBBarcodeScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 21B84FCB1BE9145C0096A584 /* MTBBarcodeScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		21B84FD61BE914660096A584 /* MTBBarcodeScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 21B84FD41BE914660096A584 /* MTBBarcodeScanner.h */; };
+		21B84FD61BE914660096A584 /* MTBBarcodeScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 21B84FD41BE914660096A584 /* MTBBarcodeScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		21B84FD71BE914660096A584 /* MTBBarcodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B84FD51BE914660096A584 /* MTBBarcodeScanner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		21B84FC81BE9145C0096A584 /* MTBBarcodeScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MTBBarcodeScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		21B84FCB1BE9145C0096A584 /* MTBBarcodeScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTBBarcodeScanner.h; sourceTree = "<group>"; };
 		21B84FCD1BE9145C0096A584 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		21B84FD41BE914660096A584 /* MTBBarcodeScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTBBarcodeScanner.h; sourceTree = "<group>"; };
-		21B84FD51BE914660096A584 /* MTBBarcodeScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTBBarcodeScanner.m; sourceTree = "<group>"; };
+		21B84FD41BE914660096A584 /* MTBBarcodeScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTBBarcodeScanner.h; path = ../../../Classes/ios/Scanners/MTBBarcodeScanner.h; sourceTree = "<group>"; };
+		21B84FD51BE914660096A584 /* MTBBarcodeScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTBBarcodeScanner.m; path = ../../../Classes/ios/Scanners/MTBBarcodeScanner.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,21 +48,11 @@
 		21B84FCA1BE9145C0096A584 /* MTBBarcodeScanner */ = {
 			isa = PBXGroup;
 			children = (
-				21B84FD31BE914660096A584 /* Scanners */,
-				21B84FCB1BE9145C0096A584 /* MTBBarcodeScanner.h */,
+				21B84FD41BE914660096A584 /* MTBBarcodeScanner.h */,
+				21B84FD51BE914660096A584 /* MTBBarcodeScanner.m */,
 				21B84FCD1BE9145C0096A584 /* Info.plist */,
 			);
 			path = MTBBarcodeScanner;
-			sourceTree = "<group>";
-		};
-		21B84FD31BE914660096A584 /* Scanners */ = {
-			isa = PBXGroup;
-			children = (
-				21B84FD41BE914660096A584 /* MTBBarcodeScanner.h */,
-				21B84FD51BE914660096A584 /* MTBBarcodeScanner.m */,
-			);
-			name = Scanners;
-			path = ../../../Classes/ios/Scanners;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -75,7 +63,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				21B84FD61BE914660096A584 /* MTBBarcodeScanner.h in Headers */,
-				21B84FCC1BE9145C0096A584 /* MTBBarcodeScanner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +279,7 @@
 				21B84FD21BE9145C0096A584 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

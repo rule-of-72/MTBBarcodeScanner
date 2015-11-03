@@ -10,6 +10,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+//! Project version number for MTBBarcodeScanner.
+FOUNDATION_EXPORT double MTBBarcodeScannerVersionNumber;
+
+//! Project version string for MTBBarcodeScanner.
+FOUNDATION_EXPORT const unsigned char MTBBarcodeScannerVersionString[];
+
+
 typedef NS_ENUM(NSUInteger, MTBCamera) {
     MTBCameraBack,
     MTBCameraFront
