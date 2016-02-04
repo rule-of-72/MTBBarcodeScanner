@@ -1,5 +1,13 @@
 # MTBBarcodeScanner CHANGELOG
 
+## 1.9.0
+
+- Added support for tapping the view to focus the camera
+
+## 1.8.11
+
+- Fixed an issue with iOS 7 support. Thanks [@kiwox](https://github.com/kiwox)!
+
 ## 1.8.10
 
 - Fixed an issue with freezing the camera and stopping capture in the demo project. Thanks [@huuang](https://github.com/huuang)!
@@ -94,7 +102,7 @@ Enhancements:
   - AVMetadataObjectTypeInterleaved2of5Code
   - AVMetadataObjectTypeITF14Code
   - AVMetadataObjectTypeDataMatrixCode
-  
+
 Thanks to [@hdoria](https://github.com/hdoria) for [bringing this](https://github.com/mikebuss/MTBBarcodeScanner/issues/15) to my attention!
 
 ## 1.2.0
