@@ -365,9 +365,10 @@ CGFloat const kFocalPointOfInterestY = 0.5;
 #pragma mark - Helper Methods
 
 - (void)addRotationObserver {
+// Vaibhav: change notification to UIApplicationDidChangeStatusBarOrientationNotification
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleDeviceOrientationDidChangeNotification:)
-                                                 name:UIDeviceOrientationDidChangeNotification
+                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
                                                object:nil];
 }
 
