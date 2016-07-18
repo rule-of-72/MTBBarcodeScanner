@@ -355,6 +355,9 @@ static const NSInteger kErrorCodeSessionIsClosed = 1001;
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     
+    // Earlier return if result block is nil
+    if (!self.resultBlock) return;
+    
     NSMutableArray *codes = [[NSMutableArray alloc] init];
     
     for (AVMetadataObject *metaData in metadataObjects) {
