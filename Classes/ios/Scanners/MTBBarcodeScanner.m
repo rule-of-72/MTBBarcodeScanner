@@ -27,6 +27,13 @@ static const NSInteger kErrorCodeSessionIsClosed = 1001;
 @property (nonatomic, strong) AVCaptureSession *session;
 
 /*!
+ @property sessionQueue
+ @abstract
+ A queue used to process session actions in the background.
+ */
+@property (nonatomic) dispatch_queue_t sessionQueue;
+
+/*!
  @property captureDevice
  @abstract
  Represents the physical device that is used for scanning barcodes.
@@ -152,6 +159,7 @@ static const NSInteger kErrorCodeSessionIsClosed = 1001;
         _previewView = previewView;
         _metaDataObjectTypes = [self defaultMetaDataObjectTypes];
         _allowTapToFocus = YES;
+        self.sessionQueue = dispatch_queue_create("sessionQueue", DISPATCH_QUEUE_SERIAL );
         [self addRotationObserver];
     }
     return self;
@@ -171,6 +179,7 @@ static const NSInteger kErrorCodeSessionIsClosed = 1001;
         _metaDataObjectTypes = metaDataObjectTypes;
         _previewView = previewView;
         _allowTapToFocus = YES;
+        self.sessionQueue = dispatch_queue_create("sessionQueue", DISPATCH_QUEUE_SERIAL );
         [self addRotationObserver];
     }
     return self;
@@ -237,35 +246,45 @@ static const NSInteger kErrorCodeSessionIsClosed = 1001;
     NSAssert(![MTBBarcodeScanner scanningIsProhibited], @"Scanning is prohibited on this device. \
              Check requestCameraPermissionWithSuccess: method before calling startScanningWithResultBlock:");
     NSAssert(resultBlock, @"startScanningWithResultBlock: requires a non-nil resultBlock.");
-    
-    // Configure the session
-    if (!self.hasExistingSession) {
-        self.captureDevice = [self newCaptureDeviceWithCamera:self.camera];
-        self.session = [self newSessionWithCaptureDevice:self.captureDevice];
-        self.hasExistingSession = YES;
-    }
-    
-    // Configure the rect of interest
-    self.captureOutput.rectOfInterest = [self rectOfInterestFromScanRect:self.scanRect];
-    
-    // Configure the preview layer
-    self.capturePreviewLayer.cornerRadius = self.previewView.layer.cornerRadius;
-    [self.previewView.layer insertSublayer:self.capturePreviewLayer atIndex:0]; // Insert below all other views
-    [self refreshVideoOrientation];
-    
-    // Configure 'tap to focus' functionality
-    [self configureTapToFocus];
-    
-    self.resultBlock = resultBlock;
-    
+
     // Start the session after all configurations
-    [self.session startRunning];
-    
-    // Call that block now that we've started scanning
-    if (self.didStartScanningBlock) {
-        self.didStartScanningBlock();
-    }
-    
+    dispatch_async(self.sessionQueue, ^{
+        
+        // Configure the session
+        if (!self.hasExistingSession) {
+            self.captureDevice = [self newCaptureDeviceWithCamera:self.camera];
+            self.session = [self newSessionWithCaptureDevice:self.captureDevice];
+            self.hasExistingSession = YES;
+        }
+        
+        // Configure the rect of interest
+        self.captureOutput.rectOfInterest = [self rectOfInterestFromScanRect:self.scanRect];
+        
+        self.resultBlock = resultBlock;
+        
+        [self.session startRunning];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            // Configure the preview layer
+            self.capturePreviewLayer = nil;
+            self.capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
+            self.capturePreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+            self.capturePreviewLayer.cornerRadius = self.previewView.layer.cornerRadius;
+            self.capturePreviewLayer.frame = self.previewView.bounds;
+            [self refreshVideoOrientation];
+            
+            // Configure 'tap to focus' functionality
+            [self configureTapToFocus];
+
+            [self.previewView.layer addSublayer:self.capturePreviewLayer]; // Insert below all other views
+            
+            // Call that block now that we've started scanning
+            if (self.didStartScanningBlock) {
+                self.didStartScanningBlock();
+            }
+        });
+    });
 }
 
 - (void)stopScanning {
@@ -281,7 +300,7 @@ static const NSInteger kErrorCodeSessionIsClosed = 1001;
         // Stop recognizing taps for the 'Tap to Focus' feature
         [self stopRecognizingTaps];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(self.sessionQueue, ^{
             
             // When we're finished scanning, reset the settings for the camera
             // to their original states
@@ -410,7 +429,7 @@ static const NSInteger kErrorCodeSessionIsClosed = 1001;
     [newSession setSessionPreset:AVCaptureSessionPresetHigh];
     
     self.captureOutput = [[AVCaptureMetadataOutput alloc] init];
-    [self.captureOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+    [self.captureOutput setMetadataObjectsDelegate:self queue:self.sessionQueue];
     
     [newSession addOutput:self.captureOutput];
     self.captureOutput.metadataObjectTypes = self.metaDataObjectTypes;
@@ -429,11 +448,6 @@ static const NSInteger kErrorCodeSessionIsClosed = 1001;
     [newSession addOutput:self.stillImageOutput];
     
     self.captureOutput.rectOfInterest = [self rectOfInterestFromScanRect:self.scanRect];
-    
-    self.capturePreviewLayer = nil;
-    self.capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:newSession];
-    self.capturePreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    self.capturePreviewLayer.frame = self.previewView.bounds;
     
     [newSession commitConfiguration];
     
