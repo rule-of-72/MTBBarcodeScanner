@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="s5e-Fs-lix">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="s5e-Fs-lix">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="-743" y="307"/>
         </scene>
-        <!--MTBBarcodeScanner-->
+        <!--Foresight-->
         <scene sceneID="Xom-Za-8HX">
             <objects>
                 <tableViewController id="YMy-63-W0h" sceneMemberID="viewController">
@@ -37,11 +38,11 @@
                                         <rect key="frame" x="0.0" y="99" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uJ3-h6-fre" id="jDg-VV-jzG">
-                                            <frame key="frameInset" width="342" height="43"/>
+                                            <frame key="frameInset" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Basic Example" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JL0-bG-aMR">
-                                                    <frame key="frameInset" minX="15" width="325" height="43"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Not Working" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="JL0-bG-aMR">
+                                                    <frame key="frameInset" minX="15" width="325" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -57,11 +58,11 @@
                                         <rect key="frame" x="0.0" y="143" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rei-mP-vvO" id="xfw-Vi-uSu">
-                                            <frame key="frameInset" width="342" height="43"/>
+                                            <frame key="frameInset" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Advanced Example" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WRc-dD-tLk">
-                                                    <frame key="frameInset" minX="15" width="325" height="43"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Foresight Cam" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WRc-dD-tLk">
+                                                    <frame key="frameInset" minX="15" width="325" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -81,7 +82,7 @@
                             <outlet property="delegate" destination="YMy-63-W0h" id="T8Y-OI-cOH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="MTBBarcodeScanner" id="Y5T-gQ-DwD"/>
+                    <navigationItem key="navigationItem" title="Foresight" id="Y5T-gQ-DwD"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PI8-dP-cbn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -126,11 +127,11 @@
                                         <rect key="frame" x="0.0" y="22" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7IE-ME-I4p" id="6oZ-Z7-Wfe">
-                                            <frame key="frameInset" width="335" height="43"/>
+                                            <frame key="frameInset" width="335" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Barcode String" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bQS-fG-DWR">
-                                                    <frame key="frameInset" minX="15" width="305" height="43"/>
+                                                    <frame key="frameInset" minX="15" width="305" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -201,7 +202,7 @@
             </objects>
             <point key="canvasLocation" x="381" y="-99"/>
         </scene>
-        <!--Advanced Example-->
+        <!--Foresight Cam-->
         <scene sceneID="lVu-9h-hOD">
             <objects>
                 <viewController id="8m2-Sm-2OA" customClass="MTBAdvancedExampleViewController" sceneMemberID="viewController">
@@ -278,7 +279,7 @@
                             <constraint firstItem="8W3-3h-rMY" firstAttribute="leading" secondItem="IGr-OQ-yDV" secondAttribute="leading" constant="20" id="sLz-10-Ruh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Advanced Example" id="2xs-hY-3Xu"/>
+                    <navigationItem key="navigationItem" title="Foresight Cam" id="2xs-hY-3Xu"/>
                     <connections>
                         <outlet property="previewView" destination="8W3-3h-rMY" id="ure-lB-fGD"/>
                         <outlet property="toggleScanningButton" destination="qBU-Rk-IPl" id="Mle-I6-TWr"/>
@@ -293,4 +294,9 @@
     <resources>
         <image name="reverse" width="60" height="48"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>

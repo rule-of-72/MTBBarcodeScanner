@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2A60ADF2A282E55E33F865 /* libPods-MTBBarcodeScannerExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD891B3FC407E0D1881DDD9C /* libPods-MTBBarcodeScannerExample.a */; };
 		2705B18D1CDBE8D700E30BED /* MTBBarcode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2705B18C1CDBE8D700E30BED /* MTBBarcode.h */; };
 		2763D16B1A01432B0001EA05 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2763D1691A01432B0001EA05 /* LaunchScreen.xib */; };
 		27C265E318A9B85E008E2A33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C265E218A9B85E008E2A33 /* QuartzCore.framework */; };
@@ -27,6 +28,7 @@
 		563B26541CD9F96100DE7D8D /* MTBBarcodeScanner.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 563B264C1CD9F95F00DE7D8D /* MTBBarcodeScanner.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		563B26591CD9F98400DE7D8D /* MTBBarcodeScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C3BF8118A73FE700C44713 /* MTBBarcodeScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		563B265A1CD9F98400DE7D8D /* MTBBarcodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C3BF8218A73FE700C44713 /* MTBBarcodeScanner.m */; };
+		EF5544A91DBBB4770095FB93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5544A81DBBB4770095FB93 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		249EC0A3432A4D2B3DA614CA /* Pods-MTBBarcodeScannerExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MTBBarcodeScannerExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MTBBarcodeScannerExample/Pods-MTBBarcodeScannerExample.debug.xcconfig"; sourceTree = "<group>"; };
 		2705B18C1CDBE8D700E30BED /* MTBBarcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTBBarcode.h; sourceTree = "<group>"; };
 		2763D16A1A01432B0001EA05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		27B417E418A8A501004B70AE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -83,6 +86,9 @@
 		27C3BF8718A7475100C44713 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		563B264C1CD9F95F00DE7D8D /* MTBBarcodeScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MTBBarcodeScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		563B26501CD9F96100DE7D8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD891B3FC407E0D1881DDD9C /* libPods-MTBBarcodeScannerExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MTBBarcodeScannerExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF5544A81DBBB4770095FB93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FD1C117B0C39709DBCD8F06F /* Pods-MTBBarcodeScannerExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MTBBarcodeScannerExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-MTBBarcodeScannerExample/Pods-MTBBarcodeScannerExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,7 @@
 				27C3BF4418A7140F00C44713 /* CoreGraphics.framework in Frameworks */,
 				27C3BF4618A7140F00C44713 /* UIKit.framework in Frameworks */,
 				27C3BF4218A7140F00C44713 /* Foundation.framework in Frameworks */,
+				0A2A60ADF2A282E55E33F865 /* libPods-MTBBarcodeScannerExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +140,7 @@
 				563B264D1CD9F96100DE7D8D /* MTBBarcodeScanner */,
 				27C3BF4018A7140F00C44713 /* Frameworks */,
 				27C3BF3F18A7140F00C44713 /* Products */,
+				902C88ACF1F486FC7F1BDAD1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -155,6 +163,7 @@
 				27C3BF4318A7140F00C44713 /* CoreGraphics.framework */,
 				27C3BF4518A7140F00C44713 /* UIKit.framework */,
 				27C3BF6318A7140F00C44713 /* XCTest.framework */,
+				AD891B3FC407E0D1881DDD9C /* libPods-MTBBarcodeScannerExample.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -166,6 +175,7 @@
 				27C3BF5318A7140F00C44713 /* Main_iPhone.storyboard */,
 				27C3BF5618A7140F00C44713 /* Main_iPad.storyboard */,
 				27C3BF5C18A7140F00C44713 /* Images.xcassets */,
+				EF5544A81DBBB4770095FB93 /* GoogleService-Info.plist */,
 				27C3BF4818A7140F00C44713 /* Supporting Files */,
 				2763D1691A01432B0001EA05 /* LaunchScreen.xib */,
 			);
@@ -265,6 +275,15 @@
 			path = MTBBarcodeScanner;
 			sourceTree = "<group>";
 		};
+		902C88ACF1F486FC7F1BDAD1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				249EC0A3432A4D2B3DA614CA /* Pods-MTBBarcodeScannerExample.debug.xcconfig */,
+				FD1C117B0C39709DBCD8F06F /* Pods-MTBBarcodeScannerExample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -284,10 +303,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 27C3BF7318A7140F00C44713 /* Build configuration list for PBXNativeTarget "MTBBarcodeScannerExample" */;
 			buildPhases = (
+				F79A31BC7FFC0FE123D8DDA2 /* Check Pods Manifest.lock */,
 				27C3BF3A18A7140F00C44713 /* Sources */,
 				27C3BF3B18A7140F00C44713 /* Frameworks */,
 				27C3BF3C18A7140F00C44713 /* Resources */,
 				563B26581CD9F96100DE7D8D /* Embed Frameworks */,
+				D03178C596BC1AEF2616C808 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -327,7 +348,8 @@
 				LastUpgradeCheck = 0720;
 				TargetAttributes = {
 					27C3BF3D18A7140F00C44713 = {
-						DevelopmentTeam = K83F2KZFM9;
+						DevelopmentTeam = H5TNQ9W7QZ;
+						ProvisioningStyle = Automatic;
 					};
 					563B264B1CD9F95F00DE7D8D = {
 						CreatedOnToolsVersion = 7.3;
@@ -363,6 +385,7 @@
 				27C3BF5D18A7140F00C44713 /* Images.xcassets in Resources */,
 				27C3BF5518A7140F00C44713 /* Main_iPhone.storyboard in Resources */,
 				27C3BF4C18A7140F00C44713 /* InfoPlist.strings in Resources */,
+				EF5544A91DBBB4770095FB93 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +397,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D03178C596BC1AEF2616C808 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MTBBarcodeScannerExample/Pods-MTBBarcodeScannerExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F79A31BC7FFC0FE123D8DDA2 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		27C3BF3A18A7140F00C44713 /* Sources */ = {
@@ -525,18 +581,19 @@
 		};
 		27C3BF7418A7140F00C44713 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 249EC0A3432A4D2B3DA614CA /* Pods-MTBBarcodeScannerExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = K83F2KZFM9;
+				DEVELOPMENT_TEAM = H5TNQ9W7QZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Prefix.pch";
 				INFOPLIST_FILE = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mikebuss.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.johngoh.MTBBarcodeScannerExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -545,18 +602,19 @@
 		};
 		27C3BF7518A7140F00C44713 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD1C117B0C39709DBCD8F06F /* Pods-MTBBarcodeScannerExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = K83F2KZFM9;
+				DEVELOPMENT_TEAM = H5TNQ9W7QZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Prefix.pch";
 				INFOPLIST_FILE = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mikebuss.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.johngoh.MTBBarcodeScannerExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -584,7 +642,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mikebuss.MTBBarcodeScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = org.johngoh.MTBBarcodeScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -615,7 +673,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mikebuss.MTBBarcodeScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = org.johngoh.MTBBarcodeScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";

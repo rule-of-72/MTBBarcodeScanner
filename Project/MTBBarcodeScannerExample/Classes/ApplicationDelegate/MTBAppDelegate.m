@@ -7,11 +7,13 @@
 //
 
 #import "MTBAppDelegate.h"
+#import "Firebase.h"
 
 @implementation MTBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [FIRApp configure];
     return YES;
 }
 							
