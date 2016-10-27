@@ -188,14 +188,23 @@ CGFloat const kFocalPointOfInterestY = 0.5;
         self.hasExistingSession = YES;
     }
     // Adding autoTorch mode. Also have to add video output to the session for auto mode to work.
-    if([self.captureDevice hasTorch] && [self.captureDevice isTorchAvailable] && [self.captureDevice isTorchModeSupported:AVCaptureTorchModeAuto]){
+    if([self.captureDevice hasTorch] && [self.captureDevice isTorchAvailable] && ([self.captureDevice isTorchModeSupported:AVCaptureTorchModeAuto] || [self.captureDevice isTorchModeSupported:AVCaptureTorchModeOn])){
       [self.session beginConfiguration];
       [self.captureDevice lockForConfiguration:nil];
       AVCaptureOutput *videoOutput = [[AVCaptureVideoDataOutput alloc] init];
       if([self.session canAddOutput:videoOutput]) {
         [self.session addOutput:videoOutput];
       }
-      [self.captureDevice setTorchMode:AVCaptureTorchModeAuto];
+      
+      // if device is iPhone 5 AND is running iOS 10, we want always ON
+      // https://underarmour.atlassian.net/browse/IOS-7024
+      if ([self shouldEnableAlwaysTorchOn]) {
+        [self.captureDevice setTorchMode:AVCaptureTorchModeOn];
+      }
+      else {
+        [self.captureDevice setTorchMode:AVCaptureTorchModeAuto];
+      }
+
       [self.captureDevice unlockForConfiguration];
       [self.session commitConfiguration];
     }
@@ -204,6 +213,18 @@ CGFloat const kFocalPointOfInterestY = 0.5;
     self.capturePreviewLayer.cornerRadius = self.previewView.layer.cornerRadius;
     [self.previewView.layer addSublayer:self.capturePreviewLayer];
     [self refreshVideoOrientation];
+}
+
+- (BOOL)shouldEnableAlwaysTorchOn {
+  BOOL isIPhone5Family = false;
+  if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+  {
+    CGSize result = [[UIScreen mainScreen] bounds].size;
+    if(result.height == 568)
+    {
+      isIPhone5Family = true;
+    }}
+  return (isIPhone5Family && [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 0, 0}]);
 }
 
 - (void)stopScanning {
