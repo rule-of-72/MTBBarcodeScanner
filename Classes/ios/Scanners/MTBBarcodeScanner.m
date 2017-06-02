@@ -312,6 +312,9 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
         return;
     }
 
+    AVCaptureSession *session = self.session;
+    self.session = nil;
+
     // Turn the torch off
     self.torchMode = MTBTorchModeOff;
 
@@ -323,21 +326,22 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
 
     // When we're finished scanning, reset the settings for the camera
     // to their original states
-    [self removeDeviceInput];
-
-    for (AVCaptureOutput *output in self.session.outputs) {
-        [self.session removeOutput:output];
-    }
 
     self.resultBlock = nil;
     self.capturePreviewLayer = nil;
 
-    AVCaptureSession *session = self.session;
-    self.session = nil;
-
     dispatch_async(self.privateSessionQueue, ^{
         // Must be dispatched as it is blocking
+
         [session stopRunning];
+
+        for (AVCaptureInput *input in session.inputs) {
+          [session removeInput:input];
+        }
+
+        for (AVCaptureOutput *output in session.outputs) {
+            [session removeOutput:output];
+        }
     });
 }
 
