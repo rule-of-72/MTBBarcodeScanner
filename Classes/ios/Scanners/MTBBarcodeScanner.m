@@ -147,6 +147,22 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
  */
 @property (nonatomic, strong) AVCapturePhotoOutput *output;
 
+#pragma mark - Photography settings
+/*!
+ @property exposureTime
+ @abstract
+ Property used to set the exposure time to a normal value in indoor condition
+ or normal daylight condition. If not set it takes the last used value and image can be black.
+ */
+@property (atomic) CMTime exposureTime ;
+/*!
+ @property iso
+ @abstract
+ Property used to set the iso to a normal value in indoor condition
+ or normal daylight condition.
+ If not set it takes the last used value and image can be full black or full white.
+ */
+@property (atomic) NSInteger iso ;
 @end
 
 @implementation MTBBarcodeScanner
@@ -173,7 +189,8 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
         // Library does not support scanning for faces
         NSAssert(!([metaDataObjectTypes indexOfObject:AVMetadataObjectTypeFace] != NSNotFound),
                  @"The type %@ is not supported by MTBBarcodeScanner.", AVMetadataObjectTypeFace);
-        
+        _exposureTime = CMTimeMake(1, 30);
+        _iso = 100;
         _metaDataObjectTypes = metaDataObjectTypes;
         _previewView = previewView;
         _allowTapToFocus = YES;
@@ -589,6 +606,11 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
         if ([newCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
             newCaptureDevice.focusMode = AVCaptureFocusModeContinuousAutoFocus;
         }
+        if (!newCaptureDevice.isAdjustingExposure)
+            [newCaptureDevice
+             setExposureModeCustomWithDuration:self.exposureTime
+             ISO:self.iso
+             completionHandler:nil];
         [newCaptureDevice unlockForConfiguration];
     } else {
         NSLog(@"Failed to acquire lock for initial focus mode: %@", error);
