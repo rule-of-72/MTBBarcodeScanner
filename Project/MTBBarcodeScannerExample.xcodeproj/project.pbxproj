@@ -332,7 +332,7 @@
 				LastUpgradeCheck = 1010;
 				TargetAttributes = {
 					27C3BF3D18A7140F00C44713 = {
-						DevelopmentTeam = K83F2KZFM9;
+						DevelopmentTeam = MUDN37DV26;
 						LastSwiftMigration = 1010;
 					};
 					563B264B1CD9F95F00DE7D8D = {
@@ -570,13 +570,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = K83F2KZFM9;
+				DEVELOPMENT_TEAM = MUDN37DV26;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Prefix.pch";
 				INFOPLIST_FILE = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mikebuss.MTBBarcodeScannerExample2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prg-consulting.MTBBarcodeScannerExample2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Bridging-Header.h";
@@ -595,13 +595,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = K83F2KZFM9;
+				DEVELOPMENT_TEAM = MUDN37DV26;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Prefix.pch";
 				INFOPLIST_FILE = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mikebuss.MTBBarcodeScannerExample2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prg-consulting.MTBBarcodeScannerExample2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MTBBarcodeScannerExample/MTBBarcodeScannerExample-Bridging-Header.h";
