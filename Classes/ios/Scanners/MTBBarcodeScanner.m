@@ -38,12 +38,12 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
  */
 @property (nonatomic, strong) AVCaptureSession *session;
 
-/*!
- @property captureDevice
- @abstract
- Represents the physical device that is used for scanning barcodes.
- */
-@property (nonatomic, strong) AVCaptureDevice *captureDevice;
+///*!
+// @property captureDevice
+// @abstract
+// Represents the physical device that is used for scanning barcodes.
+// */
+//@property (nonatomic, strong) AVCaptureDevice *captureDevice;
 
 /*!
  @property capturePreviewLayer

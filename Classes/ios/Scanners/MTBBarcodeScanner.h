@@ -29,6 +29,13 @@ typedef NS_ENUM(NSUInteger, MTBTorchMode) {
 
 @interface MTBBarcodeScanner : NSObject
 
+/*!
+ @property captureDevice
+ @abstract
+ Represents the physical device that is used for scanning barcodes.
+ */
+@property (nonatomic, strong) AVCaptureDevice *captureDevice;
+
 /**
  *  The currently set camera. See MTBCamera for options.
  *
