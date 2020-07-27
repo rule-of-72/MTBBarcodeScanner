@@ -5,12 +5,23 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/mikebuss/MTBBarcodeScanner"
   s.license          = 'MIT'
   s.author           = { "Mike Buss" => "mike@mikebuss.com" }
-  s.source           = { :git => "https://github.com/mikebuss/MTBBarcodeScanner.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/SwiftySam/MTBBarcodeScanner.git", :tag => s.version.to_s }
 
   s.platform              = :ios, '8.0'
   s.ios.deployment_target = '8.0'
   s.requires_arc          = true
-
-  s.source_files = 'Classes/ios/**/*.{h,m}'
   s.frameworks = 'AVFoundation', 'QuartzCore'
+  
+  s.default_subspec = 'ObjC'
+  s.swift_versions = ['5.1','5.2']
+  
+  s.subspec 'ObjC' do |ss|
+    ss.ios.deployment_target = '8.0'
+    ss.source_files = 'Classes/Objc/ios/**/*.{h,m}'
+  end
+  
+  s.subspec 'Swift' do |ss|
+    ss.ios.deployment_target = '8.0'
+    ss.source_files = 'Classes/Swift/ios/**/*.{swift}'
+  end
 end
