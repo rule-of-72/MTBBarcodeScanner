@@ -328,7 +328,18 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
         
         // Configure the rect of interest
         self.captureOutput.rectOfInterest = [self rectOfInterestFromScanRect:self.scanRect];
-        
+        NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:2.6];
+                    NSError *error = nil;
+                    if ([[self captureDevice] lockForConfiguration:&error])
+                    {
+                        [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
+                        //self.zoomFactorLabel.text = [NSString stringWithFormat:@"%.1f", [DefaultZoomFactor floatValue]];
+                        [[self captureDevice]unlockForConfiguration];
+                    }
+                    else
+                    {
+                        NSLog(@"%@", error);
+                    }
         // Start the session after all configurations:
         // Must be dispatched as it is blocking
         [self.session startRunning];
@@ -337,7 +348,8 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
             // Call that block now that we've started scanning:
             // Dispatch back to main
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:3.0];
+                self.didStartScanningBlock();
+                NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:2.6];
                             NSError *error = nil;
                             if ([[self captureDevice] lockForConfiguration:&error])
                             {
@@ -349,7 +361,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
                             {
                                 NSLog(@"%@", error);
                             }
-                self.didStartScanningBlock();
+
             });
         }
     });
@@ -445,16 +457,16 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
             device.focusPointOfInterest = devicePoint;
             device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
         }
-        NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:3.0];
-        if(!zoomedIn){
-            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
-            zoomedIn = true;
-        }else{
-            DefaultZoomFactor = [[NSNumber alloc] initWithFloat:1.0];
-            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue ]];
-            zoomedIn = false;
-
-        }
+//        NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:3.0];
+//        if(!zoomedIn){
+//            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
+//            zoomedIn = true;
+//        }else{
+//            DefaultZoomFactor = [[NSNumber alloc] initWithFloat:1.0];
+//            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue ]];
+//            zoomedIn = false;
+//
+//        }
     
 
         [device unlockForConfiguration];
