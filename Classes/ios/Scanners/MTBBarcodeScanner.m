@@ -13,7 +13,6 @@ CGFloat const kFocalPointOfInterestX = 0.5;
 CGFloat const kFocalPointOfInterestY = 0.5;
 
 static NSString *kErrorDomain = @"MTBBarcodeScannerError";
-static bool zoomedIn = false;
 
 // Error Codes
 static const NSInteger kErrorCodeStillImageCaptureInProgress = 1000;
@@ -354,7 +353,6 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
                             if ([[self captureDevice] lockForConfiguration:&error])
                             {
                                 [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
-                                //self.zoomFactorLabel.text = [NSString stringWithFormat:@"%.1f", [DefaultZoomFactor floatValue]];
                                 [[self captureDevice]unlockForConfiguration];
                             }
                             else
@@ -457,16 +455,6 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
             device.focusPointOfInterest = devicePoint;
             device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
         }
-//        NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:3.0];
-//        if(!zoomedIn){
-//            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
-//            zoomedIn = true;
-//        }else{
-//            DefaultZoomFactor = [[NSNumber alloc] initWithFloat:1.0];
-//            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue ]];
-//            zoomedIn = false;
-//
-//        }
     
 
         [device unlockForConfiguration];
@@ -794,35 +782,12 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     switch (self.torchMode) {
         case MTBTorchModeOn:{
             self.torchMode = MTBTorchModeOff;
-//            NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:1.0];
-//            NSError *error = nil;
-//            if ([[self captureDevice] lockForConfiguration:&error])
-//            {
-//            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
-//            //self.zoomFactorLabel.text = [NSString stringWithFormat:@"%.1f", [DefaultZoomFactor floatValue]];
-//            [[self captureDevice]unlockForConfiguration];
-//            }
-//            else
-//            {
-//            NSLog(@"%@", error);
-//            }
+
         }
             break;
             
         case MTBTorchModeOff:{
             self.torchMode = MTBTorchModeOn;
-//            NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:1.0];
-//                        NSError *error = nil;
-//                        if ([[self captureDevice] lockForConfiguration:&error])
-//                        {
-//                            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
-//                            //self.zoomFactorLabel.text = [NSString stringWithFormat:@"%.1f", [DefaultZoomFactor floatValue]];
-//                            [[self captureDevice]unlockForConfiguration];
-//                        }
-//                        else
-//                        {
-//                            NSLog(@"%@", error);
-//                        }
         }
             break;
     }
