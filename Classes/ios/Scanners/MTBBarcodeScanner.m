@@ -9,6 +9,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MTBBarcodeScanner.h"
 
+NSLog(@"MTBBarcodeScanner/c3bryant/master");
+
 CGFloat const kFocalPointOfInterestX = 0.5;
 CGFloat const kFocalPointOfInterestY = 0.5;
 

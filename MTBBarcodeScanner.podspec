@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/mikebuss/MTBBarcodeScanner"
   s.license          = 'MIT'
   s.author           = { "Mike Buss" => "mike@mikebuss.com" }
-  s.source           = { :git => "https://github.com/mikebuss/MTBBarcodeScanner.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/c3bryant/MTBBarcodeScanner.git", :branch => 'master' }
 
   s.platform              = :ios, '8.0'
   s.ios.deployment_target = '8.0'
