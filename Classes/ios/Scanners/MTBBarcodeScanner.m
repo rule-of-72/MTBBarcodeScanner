@@ -13,6 +13,7 @@ CGFloat const kFocalPointOfInterestX = 0.5;
 CGFloat const kFocalPointOfInterestY = 0.5;
 
 static NSString *kErrorDomain = @"MTBBarcodeScannerError";
+static bool zoomedIn = false;
 
 // Error Codes
 static const NSInteger kErrorCodeStillImageCaptureInProgress = 1000;
@@ -303,10 +304,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     _camera = camera;
 
     self.captureDevice = [self newCaptureDeviceWithCamera:self.camera];
-    [self.captureDevice lockForConfiguration:&error];
-    [ self.captureDevice setVideoZoomFactor: 2.0];
-
-    [self.captureDevice unlockForConfiguration];
+ 
     AVCaptureSession *session = [self newSessionWithCaptureDevice:self.captureDevice error:error];
     
     if (!session) {
@@ -327,6 +325,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     self.resultBlock = resultBlock;
     
     dispatch_async(self.privateSessionQueue, ^{
+        
         // Configure the rect of interest
         self.captureOutput.rectOfInterest = [self rectOfInterestFromScanRect:self.scanRect];
         
@@ -446,6 +445,18 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
             device.focusPointOfInterest = devicePoint;
             device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
         }
+        NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:3.0];
+        if(!zoomedIn){
+            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
+            zoomedIn = true;
+        }else{
+            DefaultZoomFactor = [[NSNumber alloc] initWithFloat:1.0];
+            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue ]];
+            zoomedIn = false;
+
+        }
+    
+
         [device unlockForConfiguration];
     } else {
         NSLog(@"Failed to acquire lock for focus change: %@", error);
@@ -520,9 +531,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 - (AVCaptureSession *)newSessionWithCaptureDevice:(AVCaptureDevice *)captureDevice error:(NSError **)error {
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:error];
-    [captureDevice lockForConfiguration:&error];
-    [ captureDevice setVideoZoomFactor:5.0];
-    [captureDevice unlockForConfiguration];
+   
 
 
     
@@ -771,12 +780,38 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 - (void)toggleTorch {
     switch (self.torchMode) {
-        case MTBTorchModeOn:
+        case MTBTorchModeOn:{
             self.torchMode = MTBTorchModeOff;
+//            NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:1.0];
+//            NSError *error = nil;
+//            if ([[self captureDevice] lockForConfiguration:&error])
+//            {
+//            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
+//            //self.zoomFactorLabel.text = [NSString stringWithFormat:@"%.1f", [DefaultZoomFactor floatValue]];
+//            [[self captureDevice]unlockForConfiguration];
+//            }
+//            else
+//            {
+//            NSLog(@"%@", error);
+//            }
+        }
             break;
             
-        case MTBTorchModeOff:
+        case MTBTorchModeOff:{
             self.torchMode = MTBTorchModeOn;
+//            NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:1.0];
+//                        NSError *error = nil;
+//                        if ([[self captureDevice] lockForConfiguration:&error])
+//                        {
+//                            [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
+//                            //self.zoomFactorLabel.text = [NSString stringWithFormat:@"%.1f", [DefaultZoomFactor floatValue]];
+//                            [[self captureDevice]unlockForConfiguration];
+//                        }
+//                        else
+//                        {
+//                            NSLog(@"%@", error);
+//                        }
+        }
             break;
     }
 }
