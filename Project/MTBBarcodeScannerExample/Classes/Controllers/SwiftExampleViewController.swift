@@ -31,12 +31,12 @@ class SwiftExampleViewController: UIViewController {
             if success {
                 do {
                     // Start scanning with the front camera
-                    try self.scanner?.startScanning(with: .front,
+                    try self.scanner?.startScanning(with: .back,
                                                     resultBlock: { codes in
                                                         if let codes = codes {
                                                             for code in codes {
-                                                                let stringValue = code.stringValue!
-                                                                print("Found code: \(stringValue)")
+                                                               // let stringValue = code.stringValue!
+                                                              //  print("Found code: \(stringValue)")
                                                             }
                                                         }
                     })

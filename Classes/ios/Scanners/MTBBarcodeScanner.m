@@ -301,7 +301,12 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     
     // Configure the session
     _camera = camera;
+
     self.captureDevice = [self newCaptureDeviceWithCamera:self.camera];
+    [self.captureDevice lockForConfiguration:&error];
+    [ self.captureDevice setVideoZoomFactor: 2.0];
+
+    [self.captureDevice unlockForConfiguration];
     AVCaptureSession *session = [self newSessionWithCaptureDevice:self.captureDevice error:error];
     
     if (!session) {
@@ -333,6 +338,18 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
             // Call that block now that we've started scanning:
             // Dispatch back to main
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSNumber *DefaultZoomFactor = [[NSNumber alloc] initWithFloat:3.0];
+                            NSError *error = nil;
+                            if ([[self captureDevice] lockForConfiguration:&error])
+                            {
+                                [[self captureDevice] setVideoZoomFactor:[DefaultZoomFactor floatValue]];
+                                //self.zoomFactorLabel.text = [NSString stringWithFormat:@"%.1f", [DefaultZoomFactor floatValue]];
+                                [[self captureDevice]unlockForConfiguration];
+                            }
+                            else
+                            {
+                                NSLog(@"%@", error);
+                            }
                 self.didStartScanningBlock();
             });
         }
@@ -503,6 +520,11 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 - (AVCaptureSession *)newSessionWithCaptureDevice:(AVCaptureDevice *)captureDevice error:(NSError **)error {
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:error];
+    [captureDevice lockForConfiguration:&error];
+    [ captureDevice setVideoZoomFactor:5.0];
+    [captureDevice unlockForConfiguration];
+
+
     
     if (!input) {
         // we rely on deviceInputWithDevice:error: to populate the error
