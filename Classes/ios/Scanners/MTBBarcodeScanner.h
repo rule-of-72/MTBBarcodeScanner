@@ -112,6 +112,12 @@ typedef NS_ENUM(NSUInteger, MTBTorchMode) {
  */
 @property (nonatomic, assign) AVCaptureAutoFocusRangeRestriction preferredAutoFocusRangeRestriction;
 
+/*!
+    @property session
+    @abstract
+    The capture session used for scanning barcodes.
+ */
+@property (nonatomic, strong) AVCaptureSession *_Nullable session;
 /**
  *  Initialize a scanner that will feed the camera input
  *  into the given UIView.
