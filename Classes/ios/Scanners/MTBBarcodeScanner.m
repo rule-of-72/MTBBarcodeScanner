@@ -513,7 +513,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     [self setDeviceInput:input session:newSession];
     
     // Set an optimized preset for barcode scanning
-    [newSession setSessionPreset:AVCaptureSessionPresetHigh];
+    [newSession setSessionPreset:AVCaptureSessionPresetPhoto];
     
     self.captureOutput = [[AVCaptureMetadataOutput alloc] init];
     [self.captureOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
