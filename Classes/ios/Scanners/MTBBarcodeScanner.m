@@ -172,14 +172,11 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
 + (BOOL)hasCamera:(MTBCamera)camera {
     AVCaptureDevicePosition position = [self devicePositionForCamera:camera];
 
-    // array is empty if status is AVAuthorizationStatusRestricted
-    for (AVCaptureDevice *device in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
-        if (device.position == position) {
-            return YES;
-        }
-    }
+    AVCaptureDeviceDiscoverySession *discoverySession = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera]
+                                                                                                               mediaType:AVMediaTypeVideo
+                                                                                                                position:position];
 
-    return NO;
+    return (discoverySession.devices.count > 0);
 }
 
 + (MTBCamera)oppositeCameraOf:(MTBCamera)camera {
@@ -489,10 +486,13 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
 
 - (AVCaptureDevice *)newCaptureDeviceWithCamera:(MTBCamera)camera {
     AVCaptureDevice *newCaptureDevice = nil;
-    
-    NSArray *videoDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
     AVCaptureDevicePosition position = [[self class] devicePositionForCamera:camera];
-    for (AVCaptureDevice *device in videoDevices) {
+    AVCaptureDeviceDiscoverySession *discoverySession = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera]
+                                                                                                               mediaType:AVMediaTypeVideo
+                                                                                                                position:position];
+
+    for (AVCaptureDevice *device in discoverySession.devices) {
         if (device.position == position) {
             newCaptureDevice = device;
             break;
