@@ -15,8 +15,6 @@ CGFloat const kFocalPointOfInterestY = 0.5;
 static NSString *kErrorDomain = @"MTBBarcodeScannerError";
 
 // Error Codes
-static const NSInteger kErrorCodeStillImageCaptureInProgress = 1000;
-static const NSInteger kErrorCodeSessionIsClosed = 1001;
 static const NSInteger kErrorCodeNotScanning = 1002;
 static const NSInteger kErrorCodeSessionAlreadyActive = 1003;
 static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
@@ -113,13 +111,6 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
  to prevent a bug in the AVFoundation framework.
  */
 @property (nonatomic, assign) CGPoint initialFocusPoint;
-
-/*!
- @property stillImageOutput
- @abstract
- Used for still image capture
- */
-@property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;
 
 /*!
  @property gestureRecognizer
@@ -485,19 +476,6 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
     [newSession addOutput:self.captureOutput];
     self.captureOutput.metadataObjectTypes = self.metaDataObjectTypes;
 
-    // Still image capture configuration
-    self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-    self.stillImageOutput.outputSettings = @{AVVideoCodecKey: AVVideoCodecJPEG};
-
-    if ([self.stillImageOutput isStillImageStabilizationSupported]) {
-        self.stillImageOutput.automaticallyEnablesStillImageStabilizationWhenAvailable = YES;
-    }
-
-    if ([self.stillImageOutput respondsToSelector:@selector(isHighResolutionStillImageOutputEnabled)]) {
-        self.stillImageOutput.highResolutionStillImageOutputEnabled = YES;
-    }
-    [newSession addOutput:self.stillImageOutput];
-
     self.captureOutput.rectOfInterest = [self rectOfInterestFromScanRect:self.scanRect];
 
     self.capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:newSession];
@@ -766,51 +744,6 @@ static const NSInteger kErrorCodeTorchModeUnavailable = 1004;
             [self.session startRunning];
         });
     }
-}
-
-
-- (void)captureStillImage:(void (^)(UIImage *image, NSError *error))captureBlock {
-    if ([self isCapturingStillImage]) {
-        if (captureBlock) {
-            NSError *error = [NSError errorWithDomain:kErrorDomain
-                                                 code:kErrorCodeStillImageCaptureInProgress
-                                             userInfo:@{NSLocalizedDescriptionKey : @"Still image capture is already in progress. Check with isCapturingStillImage"}];
-            captureBlock(nil, error);
-        }
-        return;
-    }
-    
-    AVCaptureConnection *stillConnection = [self.stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
-    
-    if (stillConnection == nil) {
-        if (captureBlock) {
-            NSError *error = [NSError errorWithDomain:kErrorDomain
-                                                 code:kErrorCodeSessionIsClosed
-                                             userInfo:@{NSLocalizedDescriptionKey : @"AVCaptureConnection is closed"}];
-            captureBlock(nil, error);
-        }
-        return;
-    }
-    
-    [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:stillConnection
-                                                       completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-                                                           if (error) {
-                                                               captureBlock(nil, error);
-                                                               return;
-                                                           }
-                                                           
-                                                           NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-                                                           UIImage *image = [UIImage imageWithData:jpegData];
-                                                           if (captureBlock) {
-                                                               captureBlock(image, nil);
-                                                           }
-                                                           
-                                                       }];
-    
-}
-
-- (BOOL)isCapturingStillImage {
-    return self.stillImageOutput.isCapturingStillImage;
 }
 
 #pragma mark - Setters
