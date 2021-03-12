@@ -199,7 +199,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 + (BOOL)hasCamera:(MTBCamera)camera {
     AVCaptureDevicePosition position = [self devicePositionForCamera:camera];
     
-    if (@available(iOS 10.0, *)) {
+    if (@available(iOS 10.0.1, *)) {
         AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera
                                                                      mediaType:AVMediaTypeVideo
                                                                       position:position];
@@ -565,7 +565,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     AVCaptureDevice *newCaptureDevice = nil;
     AVCaptureDevicePosition position = [[self class] devicePositionForCamera:camera];
     
-    if (@available(iOS 10.0, *)) {
+    if (@available(iOS 10.0.1, *)) {
         AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera
                                                                      mediaType:AVMediaTypeVideo
                                                                       position:position];
