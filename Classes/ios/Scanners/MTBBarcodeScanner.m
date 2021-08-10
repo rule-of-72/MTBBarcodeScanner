@@ -32,13 +32,6 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 @property (strong) dispatch_queue_t privateSessionQueue;
 
 /*!
- @property session
- @abstract
- The capture session used for scanning barcodes.
- */
-@property (nonatomic, strong) AVCaptureSession *session;
-
-/*!
  @property captureDevice
  @abstract
  Represents the physical device that is used for scanning barcodes.
