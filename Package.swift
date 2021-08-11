@@ -22,7 +22,8 @@ let package = Package(
         .target(
             name: "MTBBarcodeScanner",
             dependencies: [],
-            path: "Classes/ios/Scanners"
+            path: "Sources",
+            publicHeadersPath: "includes"
             )
     ]
 )
