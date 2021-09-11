@@ -15,4 +15,4 @@ FOUNDATION_EXPORT double MTBBarcodeScannerVersionNumber;
 FOUNDATION_EXPORT const unsigned char MTBBarcodeScannerVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <MTBBarcodeScanner/PublicHeader.h>
-#import <MTBarcodeScanner/Scanners/MTBBarcodeScanner.h>
+#import <MTBarcodeScanner/MTBBarcodeScanner.h>
