@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MTBBarcodeScanner2"
-  s.version          = "5.0.12"
+  s.version          = "5.0.13"
   s.summary          = "A lightweight, easy-to-use barcode scanning library for iOS 8+."
   s.homepage         = "https://github.com/grevolution/MTBBarcodeScanner"
   s.license          = 'MIT'
