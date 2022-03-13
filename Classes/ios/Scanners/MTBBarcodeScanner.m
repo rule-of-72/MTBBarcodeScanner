@@ -747,6 +747,16 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     return NO;
 }
 
+- (BOOL)setTorchLevel:(float)torchLevel error:(NSError **)error {
+    if ([self updateForTorchLevel:torchLevel error:error]) {
+        // we only update our internal state if setting the torch mode was successful
+        _torchMode = MTBTorchModeOn;
+        return YES;
+    }
+
+    return NO;
+}
+
 - (void)toggleTorch {
     switch (self.torchMode) {
         case MTBTorchModeOn:
@@ -782,6 +792,30 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     [backCamera unlockForConfiguration];
     
     return YES;
+}
+
+- (BOOL)updateForTorchLevel:(float)preferredTorchLevel error:(NSError **)error {
+    AVCaptureDevice *backCamera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+
+    if (!([backCamera isTorchAvailable] && [backCamera isTorchModeSupported:AVCaptureTorchModeOn])) {
+        if (error) {
+            *error = [NSError errorWithDomain:kErrorDomain
+                                         code:kErrorCodeTorchModeUnavailable
+                                     userInfo:@{NSLocalizedDescriptionKey : @"Torch unavailable or mode not supported."}];
+        }
+
+        return NO;
+    }
+
+    if (![backCamera lockForConfiguration:error]) {
+        NSLog(@"Failed to acquire lock to update torch mode.");
+        return NO;
+    }
+
+    BOOL result = [backCamera setTorchModeOnWithLevel:preferredTorchLevel error:error];
+    [backCamera unlockForConfiguration];
+
+    return result;
 }
 
 - (BOOL)hasTorch {
