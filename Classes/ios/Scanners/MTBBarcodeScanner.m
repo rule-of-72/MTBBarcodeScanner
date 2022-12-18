@@ -449,6 +449,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     if (!self.resultBlock) return;
+    if (self.isCapturingStillImage) return;
     
     NSMutableArray *codes = [[NSMutableArray alloc] init];
     
