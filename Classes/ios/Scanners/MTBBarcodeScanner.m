@@ -856,20 +856,24 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
         return;
     }
     
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     if (@available(iOS 10.0, *)) {
         AVCapturePhotoSettings *settings = [AVCapturePhotoSettings photoSettings];
-        settings.autoStillImageStabilizationEnabled = NO;
         settings.flashMode = AVCaptureFlashModeOff;
         settings.highResolutionPhotoEnabled = YES;
-        
+
+        if (@available(iOS 13.0, *)) {
+            settings.photoQualityPrioritization = AVCapturePhotoQualityPrioritizationSpeed;
+        } else {
+            settings.autoStillImageStabilizationEnabled = NO;
+        }
+
         dispatch_async(self.privateSessionQueue, ^{
             [self.output capturePhotoWithSettings:settings delegate:self];
             self.stillImageCaptureBlock = captureBlock;
-            
         });
     } else {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         AVCaptureConnection *stillConnection = [self.stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
         if (stillConnection == nil) {
             if (captureBlock) {
@@ -894,8 +898,9 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
                                                                    captureBlock(image, nil);
                                                                }
                                                            }];
-#pragma GCC diagnostic pop
     }
+#pragma GCC diagnostic pop
+
 }
 
 #pragma mark - AVCapturePhotoCaptureDelegate
