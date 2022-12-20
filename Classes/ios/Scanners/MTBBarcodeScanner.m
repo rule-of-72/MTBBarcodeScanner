@@ -465,12 +465,21 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 #pragma mark - Rotation
 
-- (void)handleApplicationDidChangeStatusBarNotification:(NSNotification *)notification {
+- (void)handleOrientationChangeNotification:(NSNotification *)notification {
     [self refreshVideoOrientation];
 }
 
 - (void)refreshVideoOrientation {
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    UIInterfaceOrientation orientation;
+    if (@available(iOS 13.0, *)) {
+        orientation = self.previewView.window.windowScene.interfaceOrientation;
+    } else {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        orientation = [UIApplication sharedApplication].statusBarOrientation;
+#pragma GCC diagnostic pop
+    }
+
     self.capturePreviewLayer.frame = self.previewView.bounds;
     if ([self.capturePreviewLayer.connection isVideoOrientationSupported]) {
         self.capturePreviewLayer.connection.videoOrientation = [self captureOrientationForInterfaceOrientation:orientation];
@@ -645,8 +654,8 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 - (void)addObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleApplicationDidChangeStatusBarNotification:)
-                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
+                                             selector:@selector(handleOrientationChangeNotification:)
+                                                 name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
