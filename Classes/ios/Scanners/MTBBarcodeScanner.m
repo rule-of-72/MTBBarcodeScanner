@@ -449,6 +449,7 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     if (!self.resultBlock) return;
+    if (self.isCapturingStillImage) return;
     
     NSMutableArray *codes = [[NSMutableArray alloc] init];
     
@@ -464,12 +465,21 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 #pragma mark - Rotation
 
-- (void)handleApplicationDidChangeStatusBarNotification:(NSNotification *)notification {
+- (void)handleOrientationChangeNotification:(NSNotification *)notification {
     [self refreshVideoOrientation];
 }
 
 - (void)refreshVideoOrientation {
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    UIInterfaceOrientation orientation;
+    if (@available(iOS 13.0, *)) {
+        orientation = self.previewView.window.windowScene.interfaceOrientation;
+    } else {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        orientation = [UIApplication sharedApplication].statusBarOrientation;
+#pragma GCC diagnostic pop
+    }
+
     self.capturePreviewLayer.frame = self.previewView.bounds;
     if ([self.capturePreviewLayer.connection isVideoOrientationSupported]) {
         self.capturePreviewLayer.connection.videoOrientation = [self captureOrientationForInterfaceOrientation:orientation];
@@ -644,8 +654,8 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
 
 - (void)addObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleApplicationDidChangeStatusBarNotification:)
-                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
+                                             selector:@selector(handleOrientationChangeNotification:)
+                                                 name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -747,6 +757,16 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     return NO;
 }
 
+- (BOOL)setTorchLevel:(float)torchLevel error:(NSError **)error {
+    if ([self updateForTorchLevel:torchLevel error:error]) {
+        // we only update our internal state if setting the torch mode was successful
+        _torchMode = MTBTorchModeOn;
+        return YES;
+    }
+
+    return NO;
+}
+
 - (void)toggleTorch {
     switch (self.torchMode) {
         case MTBTorchModeOn:
@@ -782,6 +802,30 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
     [backCamera unlockForConfiguration];
     
     return YES;
+}
+
+- (BOOL)updateForTorchLevel:(float)preferredTorchLevel error:(NSError **)error {
+    AVCaptureDevice *backCamera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+
+    if (!([backCamera isTorchAvailable] && [backCamera isTorchModeSupported:AVCaptureTorchModeOn])) {
+        if (error) {
+            *error = [NSError errorWithDomain:kErrorDomain
+                                         code:kErrorCodeTorchModeUnavailable
+                                     userInfo:@{NSLocalizedDescriptionKey : @"Torch unavailable or mode not supported."}];
+        }
+
+        return NO;
+    }
+
+    if (![backCamera lockForConfiguration:error]) {
+        NSLog(@"Failed to acquire lock to update torch mode.");
+        return NO;
+    }
+
+    BOOL result = [backCamera setTorchModeOnWithLevel:preferredTorchLevel error:error];
+    [backCamera unlockForConfiguration];
+
+    return result;
 }
 
 - (BOOL)hasTorch {
@@ -846,20 +890,24 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
         return;
     }
     
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     if (@available(iOS 10.0, *)) {
         AVCapturePhotoSettings *settings = [AVCapturePhotoSettings photoSettings];
-        settings.autoStillImageStabilizationEnabled = NO;
         settings.flashMode = AVCaptureFlashModeOff;
         settings.highResolutionPhotoEnabled = YES;
-        
+
+        if (@available(iOS 13.0, *)) {
+            settings.photoQualityPrioritization = AVCapturePhotoQualityPrioritizationSpeed;
+        } else {
+            settings.autoStillImageStabilizationEnabled = NO;
+        }
+
         dispatch_async(self.privateSessionQueue, ^{
             [self.output capturePhotoWithSettings:settings delegate:self];
             self.stillImageCaptureBlock = captureBlock;
-            
         });
     } else {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         AVCaptureConnection *stillConnection = [self.stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
         if (stillConnection == nil) {
             if (captureBlock) {
@@ -884,8 +932,9 @@ static const NSInteger kErrorMethodNotAvailableOnIOSVersion = 1005;
                                                                    captureBlock(image, nil);
                                                                }
                                                            }];
-#pragma GCC diagnostic pop
     }
+#pragma GCC diagnostic pop
+
 }
 
 #pragma mark - AVCapturePhotoCaptureDelegate
