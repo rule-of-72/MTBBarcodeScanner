@@ -1,3 +1,10 @@
+# Update 2023-08-20, specific to [this fork](https://github.com/rule-of-72/MTBBarcodeScanner/)
+- Other forks existing as of this date have been examined for changes from the upstream repository. Changes that appear useful to everyone (not just specific projects or organizations) have been merged into this fork.
+- The `develop` branch has been merged into `master` and deleted. All new changes from this point should start from `master` and plan to pull-request back into `master`.
+- The `master` branch will eventually get renamed to `main`, but other work needs to get done first. In particular, the CocoaPods `rakefile` needs to get updated.
+
+Original README from the upstream repository:
+
 # This library is no longer actively maintained. If you are interested in maintaining it, please contact [the original author](mailto:mike@mikebuss.com).
 
 # MTBBarcodeScanner
