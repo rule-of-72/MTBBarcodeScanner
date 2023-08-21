@@ -301,6 +301,17 @@ typedef NS_ENUM(NSUInteger, MTBTorchMode) {
 - (BOOL)setTorchMode:(MTBTorchMode)torchMode error:(NSError **)error;
 
 /**
+ *  Attempts to set a new torch level.
+ *
+ *  @return YES, if setting the new level was successful, and the torchMode
+ *  property reflects the new state. NO if there was an error - use the
+ *  error parameter to learn about the reason.
+ *
+ *  @sa torchMode
+ */
+- (BOOL)setTorchLevel:(float)torchLevel error:(NSError **)error;
+
+/**
  *  Freeze capture keeping the last frame on previewView.
  *  If this method is called before startScanning, it has no effect.
  *
