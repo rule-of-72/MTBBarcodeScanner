@@ -1,3 +1,10 @@
+# Update 2024-03-25
+Certain older iPads are unable to scan barcodes after updating to iPadOS 17.4. Updating to iPadOS 17.4.1 fixes QR code scanning, but not other symbologies such as PDF417.
+
+See [https://support.apple.com/en-us/118614](https://support.apple.com/en-us/118614) for details.
+
+The workaround (at this time) is to adopt the `VNDetectBarcodesRequest` API instead of `AVCaptureMetadataOutput`. However, that means abandoning this library.
+
 # Update 2023-08-20, specific to [this fork](https://github.com/rule-of-72/MTBBarcodeScanner/)
 - Other forks existing as of this date have been examined for changes from the upstream repository. Changes that appear useful to everyone (not just specific projects or organizations) have been merged into this fork.
 - The `develop` branch has been merged into `master` and deleted. All new changes from this point should start from `master` and plan to pull-request back into `master`.
